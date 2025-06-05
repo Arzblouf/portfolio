@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio - Projects</title>
+<style>
+  :root {
+    --color-bg: #f5f7fa;
+    --color-text-primary: #333;
+    --color-text-secondary: #555;
+    --color-accent: #3a8ee6;
+    --color-border: #ddd;
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --shadow-light: rgba(0,0,0,0.07);
+  }
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    font-family: var(--font-primary);
+    color: var(--color-text-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 2rem 1.5rem;
+    background-color: white;
+    border-bottom: 1px solid var(--color-border);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 10;
+  }
+  .container {
+    max-width: 900px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+  }
+  h1 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+  }
+  nav.desktop-nav {
+    margin-top: 0.5rem;
+  }
+  nav.desktop-nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    margin-left: 1.5rem;
+    transition: color 0.3s ease;
+    font-size: 1rem;
+  }
+  nav.desktop-nav a:first-child {
+    margin-left: 0;
+  }
+  nav.desktop-nav a:hover, nav.desktop-nav a:focus {
+    color: var(--color-accent);
+    outline: none;
+  }
+
+  /* Hamburger menu button */
+  .menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: absolute;
+    top: 2rem;
+    right: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0;
+    box-sizing: border-box;
+    z-index: 11;
+  }
+  .menu-button:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .menu-button span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-text-primary);
+    border-radius: 2px;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  .menu-button.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    background-color: var(--color-accent);
+  }
+  .menu-button.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-button.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+    background-color: var(--color-accent);
+  }
+  /* Hide desktop nav on small screens */
+  @media (max-width: 720px) {
+    nav.desktop-nav {
+      display: none;
+    }
+  }
+  /* Hide menu button on desktop */
+  @media (min-width: 721px) {
+    .menu-button {
+      display: none;
+    }
+  }
+
+  main {
+    flex: 1;
+    padding: 2.5rem 1.5rem 4rem;
+  }
+  .container-main {
+    max-width: 900px;
+    margin: 0 auto;
+  }
+  h2 {
+    font-weight: 600;
+    font-size: 1.5rem;
+    color: var(--color-text-primary);
+    margin-bottom: 1rem;
+  }
+
+  /* Dropdown styles */
+  .dropdown {
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 1px 8px rgba(0,0,0,0.1);
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+  .dropdown-header {
+    padding: 1rem 1.5rem;
+    cursor: pointer;
+    user-select: none;
+    font-weight: 700;
+    font-size: 1.2rem;
+    color: var(--color-accent);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .dropdown-header:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .dropdown-icon {
+    transition: transform 0.3s ease;
+  }
+  .dropdown.open .dropdown-icon {
+    transform: rotate(180deg);
+  }
+  .dropdown-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.35s ease;
+    padding: 0 1.5rem;
+  }
+  .dropdown.open .dropdown-content {
+    max-height: 1000px; /* large enough for content */
+    padding-bottom: 1rem;
+  }
+  .dropdown-content ul {
+    margin: 0;
+    padding-left: 1.25rem;
+  }
+  .dropdown-content li {
+    list-style-type: disc;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    color: var(--color-text-secondary);
+  }
+  .dropdown-content li a {
+    color: var(--color-accent);
+    text-decoration: none;
+  }
+  .dropdown-content li a:hover,
+  .dropdown-content li a:focus {
+    text-decoration: underline;
+    outline: none;
+  }
+
+  footer {
+    background-color: white;
+    border-top: 1px solid var(--color-border);
+    padding: 1.5rem 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Popup menu overlay */
+  .menu-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245, 247, 250, 0.95);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  .menu-popup.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .menu-popup nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .menu-popup nav a {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    text-align: center;
+    transition: color 0.3s ease;
+  }
+  .menu-popup nav a:hover,
+  .menu-popup nav a:focus {
+    color: var(--color-accent);
+    outline: none;
+  }
+  /* Close button inside popup */
+  .menu-popup .close-button {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
+  }
+  .menu-popup .close-button:hover,
+  .menu-popup .close-button:focus {
+    color: var(--color-accent);
+    outline: none;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container">
+      <h1>Jane Doe</h1>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="index.html" tabindex="1">A propos</a>
+        <a href="projet.html" tabindex="2">Projets</a>
+        <a href="formation.html" tabindex="3">Formation</a>
+        <a href="veille.html" tabindex="4">Veille</a>
+        <a href="contact.html" tabindex="5">Contact</a>
+      </nav>
+      <button class="menu-button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-popup" id="menu-button" tabindex="6">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+  <main>
+    <div class="container-main">
+      <h2>Ma Formation</h2>
+      <section class="dropdown" id="school-dropdown">
+        <button class="dropdown-header" aria-expanded="false" aria-controls="school-projects-list" id="school-dropdown-button" tabindex="7">
+          Projets Professionnels
+          <span class="dropdown-icon" aria-hidden="true">&#9660;</span>
+        </button>
+        <div class="dropdown-content" id="school-projects-list" role="region" aria-labelledby="school-dropdown-button">
+            <h2>Qu'est-ce que le BTS SIO ?</h2>
+                <p>
+                    Le BTS Services Informatiques aux Organisations (SIO) est un diplôme d’État de niveau Bac +2 
+                    qui forme des techniciens capables de répondre aux besoins en informatique des entreprises.
+                    Il propose deux spécialisations :
+                </p>
+                <ul>
+                    <li><strong>SISR</strong> : Solutions d’Infrastructure, Systèmes et Réseaux</li>
+                    <li><strong>SLAM</strong> : Solutions Logicielles et Applications Métiers</li>
+                </ul>
+                <h2>Option SLAM - Solutions Logicielles et Applications Métiers</h2>
+                    <p>
+                        L’option SLAM est centrée sur le développement d’applications. Elle permet d’apprendre à :
+                    </p>
+                    <ul>
+                        <li>Développer des applications web, mobiles ou de bureau</li>
+                        <li>Utiliser des langages comme HTML, CSS, PHP, JavaScript, SQL, Java...</li>
+                        <li>Concevoir des bases de données et manipuler des systèmes de gestion (SGBD)</li>
+                        <li>Assurer la maintenance des applications</li>
+                        <li>Travailler en mode projet avec des outils collaboratifs</li>
+                    </ul>
+        </div>
+        </section>
+      <section class="dropdown" id="personal-dropdown">
+        <button class="dropdown-header" aria-expanded="false" aria-controls="personal-projects-list" id="personal-dropdown-button" tabindex="8">
+          Poursuite d'études et débouchés.
+          <span class="dropdown-icon" aria-hidden="true">&#9660;</span>
+        </button>
+        <div class="dropdown-content" id="personal-projects-list" role="region" aria-labelledby="personal-dropdown-button">
+            <h2>Poursuite d’études</h2>
+                <p>
+                    Après un BTS SIO SLAM, il est possible de continuer ses études :
+                </p>
+                <ul>
+                    <li>Licence professionnelle en développement ou cybersécurité</li>
+                    <li>Bachelor dans une école d’informatique</li>
+                    <li>École d’ingénieur (via admissions parallèles)</li>
+                    <li>Formation spécialisée en alternance</li>
+                </ul>
+            <h2>Débouchés professionnels</h2>
+                <ul>
+                    <li>Développeur web / mobile / fullstack</li>
+                    <li>Analyste-programmeur</li>
+                    <li>Concepteur d’applications</li>
+                    <li>Intégrateur web</li>
+                    <li>Technicien d’études informatiques</li>
+                </ul>
+      </section>
+    </div>
+  </main>
+  <footer>
+    &copy; Tout droit réservé à moi.
+  </footer>
+  <aside class="menu-popup" id="menu-popup" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="close-button" aria-label="Close menu" id="close-button">&times;</button>
+    <nav aria-label="Popup navigation">
+      <a href="index.html" tabindex="9">A propos</a>
+      <a href="projet.html" tabindex="10">Projets</a>
+      <a href="formation.html" tabindex="11">Formation</a>
+      <a href="veille.html" tabindex="12">Veille</a>
+      <a href="contact.html" tabindex="13">Contact</a>
+    </nav>
+  </aside>
+<script>
+  const menuButton = document.getElementById('menu-button');
+  const menuPopup = document.getElementById('menu-popup');
+  const closeButton = document.getElementById('close-button');
+
+  function openMenu() {
+    menuPopup.classList.add('open');
+    menuPopup.setAttribute('aria-hidden', 'false');
+    menuButton.setAttribute('aria-expanded', 'true');
+    menuButton.classList.add('open');
+    // Focus first nav link in popup for accessibility
+    const firstLink = menuPopup.querySelector('nav a');
+    if (firstLink) firstLink.focus();
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuPopup.classList.remove('open');
+    menuPopup.setAttribute('aria-hidden', 'true');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.classList.remove('open');
+    menuButton.focus();
+    document.body.style.overflow = '';
+  }
+
+  menuButton.addEventListener('click', () => {
+    if (menuPopup.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  closeButton.addEventListener('click', closeMenu);
+
+  menuPopup.addEventListener('click', e => {
+    if (e.target === menuPopup) {
+      closeMenu();
+    }
+  });
+
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menuPopup.classList.contains('open')) {
+      e.preventDefault();
+      closeMenu();
+    }
+  });
+
+  // Dropdown toggles
+  const schoolDropdownBtn = document.getElementById('school-dropdown-button');
+  const schoolDropdown = document.getElementById('school-dropdown');
+
+  const personalDropdownBtn = document.getElementById('personal-dropdown-button');
+  const personalDropdown = document.getElementById('personal-dropdown');
+
+  function toggleDropdown(dropdown, button) {
+    const isOpen = dropdown.classList.contains('open');
+    if (isOpen) {
+      dropdown.classList.remove('open');
+      button.setAttribute('aria-expanded', 'false');
+    } else {
+      dropdown.classList.add('open');
+      button.setAttribute('aria-expanded', 'true');
+    }
+  }
+
+  schoolDropdownBtn.addEventListener('click', () => {
+    toggleDropdown(schoolDropdown, schoolDropdownBtn);
+  });
+
+  personalDropdownBtn.addEventListener('click', () => {
+    toggleDropdown(personalDropdown, personalDropdownBtn);
+  });
+
+  // Keyboard accessibility: toggle on Enter or Space
+  function keyToggleHandler(e, dropdown, button) {
+    if (e.key === 'Enter' || e.key === ' ') {
+      e.preventDefault();
+      toggleDropdown(dropdown, button);
+    }
+  }
+
+  schoolDropdownBtn.addEventListener('keydown', e => keyToggleHandler(e, schoolDropdown, schoolDropdownBtn));
+  personalDropdownBtn.addEventListener('keydown', e => keyToggleHandler(e, personalDropdown, personalDropdownBtn));
+</script>
+</body>
+</html>

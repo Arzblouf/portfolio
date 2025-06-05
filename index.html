@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Portfolio - Home</title>
+<style>
+  :root {
+    --color-bg: #f5f7fa;
+    --color-text-primary: #333;
+    --color-text-secondary: #555;
+    --color-accent: #3a8ee6;
+    --color-border: #ddd;
+    --font-primary: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    --shadow-light: rgba(0,0,0,0.07);
+  }
+  /* Reset and base */
+  * {
+    box-sizing: border-box;
+  }
+  body {
+    margin: 0;
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-primary);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  header {
+    padding: 2rem 1.5rem;
+    border-bottom: 1px solid var(--color-border);
+    background-color: white;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 10;
+  }
+  .container {
+    max-width: 960px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  .header-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+  h1 {
+    font-weight: 700;
+    margin: 0;
+    font-size: 1.8rem;
+    color: var(--color-text-primary);
+  }
+  nav.desktop-nav {
+    margin-top: 0.5rem;
+  }
+  nav.desktop-nav a {
+    text-decoration: none;
+    color: var(--color-text-secondary);
+    font-weight: 600;
+    margin-left: 1.5rem;
+    transition: color 0.3s ease;
+  }
+  nav.desktop-nav a:first-child {
+    margin-left: 0;
+  }
+  nav.desktop-nav a:hover, nav.desktop-nav a:focus {
+    color: var(--color-accent);
+    outline: none;
+  }
+
+  /* Menu button for popup menu */
+  .menu-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 32px;
+    height: 32px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  .menu-button:focus {
+    outline: 2px solid var(--color-accent);
+    outline-offset: 2px;
+  }
+  .menu-button span {
+    display: block;
+    width: 100%;
+    height: 3px;
+    background-color: var(--color-text-primary);
+    border-radius: 2px;
+    transition: background-color 0.3s ease;
+  }
+  .menu-button.open span:nth-child(1) {
+    transform: rotate(45deg) translate(5px, 5px);
+    background-color: var(--color-accent);
+  }
+  .menu-button.open span:nth-child(2) {
+    opacity: 0;
+  }
+  .menu-button.open span:nth-child(3) {
+    transform: rotate(-45deg) translate(5px, -5px);
+    background-color: var(--color-accent);
+  }
+  /* Hide desktop nav on small screens */
+  @media (max-width: 720px) {
+    nav.desktop-nav {
+      display: none;
+    }
+  }
+
+  main {
+    flex: 1;
+    padding: 3rem 1.5rem;
+  }
+  .intro {
+    max-width: 720px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    margin-bottom: 4rem;
+  }
+  .intro h2 {
+    font-weight: 600;
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--color-text-secondary);
+  }
+  .intro p {
+    font-size: 1.1rem;
+    line-height: 1.6;
+    color: var(--color-text-secondary);
+    margin-top: 0;
+  }
+
+  /* Presentation and CV boxes container - vertical stacking */
+  .presentation-cv-wrapper {
+    max-width: 900px;
+    margin: 0 auto 3rem auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    align-items: center;
+  }
+
+  /* CV box */
+  .cv-box {
+    width: 100%;
+    max-width: 320px;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px var(--shadow-light);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1.5rem;
+    transition: transform 0.3s ease;
+    z-index: 1;
+  }
+  .cv-box:hover {
+    transform: translateY(-10px);
+  }
+  .cv-box a {
+    display: inline-block;
+    padding: 0.75rem 1.6rem;
+    background-color: var(--color-accent);
+    color: white;
+    font-weight: 700;
+    font-size: 1.1rem;
+    border-radius: 6px;
+    text-decoration: none;
+    box-shadow: 0 3px 6px rgba(58, 142, 230, 0.4);
+    transition: background-color 0.3s ease;
+  }
+  .cv-box a:hover,
+  .cv-box a:focus {
+    background-color: #2a74c7;
+    outline: none;
+  }
+
+  /* Presentation box */
+  .presentation-box {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px var(--shadow-light);
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    padding: 1.5rem 2rem;
+    gap: 1.5rem;
+  }
+  /* Presentation text */
+  .presentation-text {
+    flex-grow: 1;
+  }
+  .presentation-text p {
+    margin: 0 0 0.75rem 0;
+    font-size: 1.1rem;
+    color: var(--color-text-secondary);
+    line-height: 1.5;
+  }
+  /* Presentation image */
+  .presentation-image {
+    flex-shrink: 0;
+    max-width: 180px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px var(--shadow-light);
+    object-fit: cover;
+    height: auto;
+    width: 180px;
+  }
+
+  /* Responsive adjustments */
+  @media (max-width: 480px) {
+    .presentation-box {
+      flex-direction: column;
+      padding: 1.5rem;
+      max-width: 90%;
+      text-align: center;
+    }
+    .presentation-image {
+      margin-left: 0;
+      margin-top: 1rem;
+      width: 100%;
+      max-width: 280px;
+      height: auto;
+    }
+  }
+
+  footer {
+    background-color: white;
+    border-top: 1px solid var(--color-border);
+    padding: 1.5rem 1.5rem;
+    text-align: center;
+    font-size: 0.9rem;
+    color: var(--color-text-secondary);
+  }
+
+  /* Popup menu overlay */
+  .menu-popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(245, 247, 250, 0.95);
+    backdrop-filter: blur(4px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.3s ease;
+    z-index: 1000;
+  }
+  .menu-popup.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+  .menu-popup nav {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .menu-popup nav a {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--color-text-primary);
+    text-decoration: none;
+    text-align: center;
+    transition: color 0.3s ease;
+  }
+  .menu-popup nav a:hover,
+  .menu-popup nav a:focus {
+    color: var(--color-accent);
+    outline: none;
+  }
+  /* Close button inside popup */
+  .menu-popup .close-button {
+    position: absolute;
+    top: 1.25rem;
+    right: 1.5rem;
+    background: none;
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: color 0.3s ease;
+  }
+  .menu-popup .close-button:hover,
+  .menu-popup .close-button:focus {
+    color: var(--color-accent);
+    outline: none;
+  }
+</style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <h1>Joshua Vannier</h1>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="index.html" tabindex="1">A propos</a>
+        <a href="projet.html" tabindex="2">Projets</a>
+        <a href="formation.html" tabindex="3">Formation</a>
+        <a href="veille.html" tabindex="4">Veille</a>
+        <a href="contact.html" tabindex="5">Contact</a>
+      </nav>
+      <button class="menu-button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-popup" id="menu-button" tabindex="6">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro container" id="about" tabindex="-1">
+      <h2>Etudiant en BTS SIO SLAM</h2>
+      <p>
+        Passioné de développement.
+      </p>
+    </section>
+
+    <section class="presentation-cv-wrapper" aria-label="Presentation and CV section">
+      <div class="presentation-box" tabindex="0">
+        <div class="presentation-text">
+          <p>Bonjour.
+            <br>Je m'appelle Joshua Vannier et je suis en BTS SIO (Services Informatiques aux Organisations) option SLAM (Solutions Logicielles et Applictions Métiers).
+            Je suis actuellement étudiant à l'ENSITECH, au campus de Saint Quentin en Yvelines (78).
+            <br>J'ai découvert un intérêt pour la programation durant mon année de première, année durant laquelle j'ai choisi d'effectuer la spécialités NSI (Numériques et Sciences Informatiques).
+            Aujourd'hui j'aimerais continuer dans cette voie en effectuant par la suite une License de developpeur full stack puis à terme un master M2 Lead Developpeur Full Stack.
+          </p>
+        </div>
+        <img src="#" alt="Photo moi" class="presentation-image" />
+      </div>
+      <div class="cv-box" aria-label="Downloadable CV" tabindex="0">
+        <a href="CV Joshua Vannier.pdf" download="Joshua-Vannier-CV.pdf" target="_blank" rel="noopener noreferrer">
+          Télécharger mon CV
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; Tout droits réservés à moi.
+  </footer>
+
+  <!-- Popup menu overlay -->
+  <aside class="menu-popup" id="menu-popup" aria-hidden="true" role="dialog" aria-modal="true">
+    <button class="close-button" aria-label="Close menu" id="close-button">&times;</button>
+    <nav aria-label="Popup navigation">
+      <a href="index.html" tabindex="7">A propos</a>
+      <a href="projet.html" tabindex="8">Projets</a>
+      <a href="formation.html" tabindex="9">Formation</a>
+      <a href="veille.html" tabindex="10">Veille</a>
+      <a href="contact.html" tabindex="11">Contact</a>
+    </nav>
+  </aside>
+
+<script>
+  const menuButton = document.getElementById('menu-button');
+  const menuPopup = document.getElementById('menu-popup');
+  const closeButton = document.getElementById('close-button');
+
+  function openMenu() {
+    menuPopup.classList.add('open');
+    menuPopup.setAttribute('aria-hidden', 'false');
+    menuButton.setAttribute('aria-expanded', 'true');
+    menuButton.classList.add('open');
+    // Focus first nav link in popup for accessibility
+    const firstLink = menuPopup.querySelector('nav a');
+    if (firstLink) firstLink.focus();
+    // Prevent body scroll
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeMenu() {
+    menuPopup.classList.remove('open');
+    menuPopup.setAttribute('aria-hidden', 'true');
+    menuButton.setAttribute('aria-expanded', 'false');
+    menuButton.classList.remove('open');
+    menuButton.focus();
+    // Restore body scroll
+    document.body.style.overflow = '';
+  }
+
+  menuButton.addEventListener('click', () => {
+    if (menuPopup.classList.contains('open')) {
+      closeMenu();
+    } else {
+      openMenu();
+    }
+  });
+
+  closeButton.addEventListener('click', closeMenu);
+
+  // Close menu on clicking outside nav links (on popup background)
+  menuPopup.addEventListener('click', e => {
+    if (e.target === menuPopup) {
+      closeMenu();
+    }
+  });
+
+  // Close menu on pressing Escape key
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && menuPopup.classList.contains('open')) {
+      e.preventDefault();
+      closeMenu();
+    }
+  });
+</script>
+</body>
+</html>
