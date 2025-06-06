@@ -297,8 +297,17 @@
         </button>
         <div class="dropdown-content" id="school-projects-list" role="region" aria-labelledby="school-dropdown-button">
           <ul>
-            <li><a href="https://arzblouf.github.io/Site-Web" tabindex="8">Site Web Classique</a></li>
-            <li><a href="https://github.com/Arzblouf/projet-mvc" tabindex="9">Site Web avec architecture MVC</a></li>
+            <li><a href="https://arzblouf.github.io/Site-Web" tabindex="8">Site Web Classique</a><br>
+            <p>Site web simple comportant différentes commandes html classiques, tel q'un tableau, un formulaire (malheureusement inefficace) ou encore les liens et images cliquables.<br>
+              Il comporte également différentes class css ainsi qu'un peu de JavaScript afin de changer de thème (passant du noir au blanc et inversemenht).<br>
+              Le site est basé sur <a href="http://fondationscp.wikidot.com">La fondation SCP</a></p></li>
+            <li><a href="https://github.com/Arzblouf/projet-mvc" tabindex="9">Site Web avec architecture MVC</a><br>
+            <p>Site Web (malheuresement pas en ligne) construit avec la structure MVC (Modèle/Vue/Controller) et en POO (Programmation Orienté Objet).<br>
+            Le projet est cindé en 3 fichiers distincts, celui pour les modèles, celuis pour les controllers et celui pour les vues.<br>
+            Chaque modèle est une classe basé sur une table de la base de données du projet (schéma conceptuel ci-dessous).<br>
+            De la même façon, chaque controller est une classe faisant appelle au modèle du même nom et rappelant ses fonctions.<br>
+            Enfin les vues sont un mélange de html et de php utilisant les fonctions des controllers, qui appelaient eux-mêmes les fonctions des modèles.</p><br>
+            <img src="Schéma conceptuel BDD.png" alt="Schéma conceptuel de la BDD"/></li>
           </ul>
         </div>
       </section>
@@ -309,7 +318,10 @@
         </button>
         <div class="dropdown-content" id="personal-projects-list" role="region" aria-labelledby="personal-dropdown-button">
           <ul>
-            <li><a href="www.pyxelstudio.net/4jd8ewrl" tabindex="11">Mini jeu en Python</a></li>
+            <li><a href="www.pyxelstudio.net/4jd8ewrl" tabindex="11">Mini jeu en Python</a><br>
+            <p>Mini-jeu en Python POO utilisant le module Pyxel permettant des rendus simples en 2D.<br>
+            Chaque élement mobile du jeu est une classe différente, possédant chacune leur attributs.<br>
+            De même, le jeu en lui même est une classe répartit en 2 fonctions princiapales, l'une pour initialiser et mettres à jour les variables, l'autre pour gérer l'affichage.</p></li>
           </ul>
         </div>
       </section>
